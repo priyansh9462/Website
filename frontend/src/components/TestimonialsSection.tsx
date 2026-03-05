@@ -10,7 +10,7 @@ const testimonials = [
         name: "Sameeksha Meena",
         role: "JEN",
         course: "Electrical Engineering",
-        image: "Sameeksha Meena.png",
+        image: "/images/Sameeksha Meena.png",
         content: "This institution didn't just educate me\u2014it transformed my entire perspective on innovation and leadership. The visionary approach here is unmatched anywhere in the world.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -20,7 +20,7 @@ const testimonials = [
         name: "Sandeep Thakur",
         role: "Sr. Software Developer at TCS",
         course: "Computer Science Engineering ",
-        image: "Sandeep Thakur.png",
+        image: "/images/Sandeep Thakur.png",
         content: "The cutting-edge research environment and world-class mentorship here shaped my career in ways I never imagined. This is where the future is born.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -30,7 +30,7 @@ const testimonials = [
         name: "Vishnu Mahawar",
         role: "Sr. Software Developer at Five Holidays",
         course: "Computer Science Engineering",
-        image: "Vishnu Mahawar.png",
+        image: "/images/Vishnu Mahawar.png",
         content: "The global perspective and strategic thinking I developed here have been the foundation of my success across three continents. Truly transformational.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -40,7 +40,7 @@ const testimonials = [
         name: "Vivek Bairwa",
         role: "Power Grid",
         course: "Global Tech Policy",
-        image: "Vivek Bairwa.png",
+        image: "/images/Vivek Bairwa.png",
         content: "This place gave me the confidence and tools to influence global decisions on AI ethics.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -50,7 +50,7 @@ const testimonials = [
         name: "Ayushi Goyal",
         role: "CTO at QuantumLeap",
         course: "Computer Science Engineering",
-        image: "Ayushi Goyal.png",
+        image: "/images/Ayushi Goyal.png",
         content: "Quantum theory finally made sense here\u2014thanks to brilliant professors and hands-on labs.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -60,7 +60,7 @@ const testimonials = [
         name: "Kartik Nama",
         role: "UX Design Lead at Airbnb",
         course: "Computer Science Engineering",
-        image: "kartik.png",
+        image: "/images/kartik.png",
         content: "Human empathy and design thinking merged into something beautiful during my time here.",
         rating: 4,
         achievement: "Graduate From GECB"
@@ -70,7 +70,7 @@ const testimonials = [
         name: "Ashutosh Singh",
         role: "DevOps Engineer",
         course: "Computer Science Engineering",
-        image: "blank.jpg",
+        image: "/images/blank.jpg",
         content: "They nurtured my startup dream from an idea into a company with global impact.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -80,7 +80,7 @@ const testimonials = [
         name: "Ashutosh Sharma",
         role: "Informative Assistant",
         course: "Computer Science Engineering",
-        image: "blank.jpg",
+        image: "/images/blank.jpg",
         content: "We worked on real-world energy projects that are saving lives and the planet.",
         rating: 4,
         achievement: "Graduate From GECB"
@@ -90,7 +90,7 @@ const testimonials = [
         name: "Ankit Saini",
         role: "Informative Assistant",
         course: "Computer Science Engineering",
-        image: "ankit saini.jpg",
+        image: "/images/ankit saini.jpg",
         content: "Cyber threats are evolving\u2014and so did my mindset and skills here.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -100,7 +100,7 @@ const testimonials = [
         name: "Sahil Khan",
         role: "Architect at Shree Ji Architecture",
         course: "Civil Engineering",
-        image: "sahil - Edited.jpg",
+        image: "/images/sahil - Edited.jpg",
         content: "We're using AI to make life-saving diagnoses\u2014and it started with the knowledge I gained here.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -110,7 +110,7 @@ const testimonials = [
         name: "Arvind Meghwal",
         role: "Field Engineer at NTPC",
         course: "Electrical Engineering",
-        image: "arvind.jpg",
+        image: "/images/arvind.jpg",
         content: "The XR lab was a game changer for my passion in building virtual worlds.",
         rating: 4,
         achievement: "Graduate From GECB"
@@ -120,7 +120,7 @@ const testimonials = [
         name: "Sonu Nagar",
         role: "Technical Executive at J.K Super Cement",
         course: "Civil Engineering",
-        image: "sonu bijora.jpg",
+        image: "/images/sonu bijora.jpg",
         content: "I learned to think like an economist and a strategist under one roof.",
         rating: 4,
         achievement: "Graduate From GECB"
@@ -130,7 +130,7 @@ const testimonials = [
         name: "Deepika Suman",
         role: "Paint Consultant (C.R.M) at Birla opus",
         course: "Computer Science Engineering",
-        image: "deepika suman.jpg",
+        image: "/images/deepika suman.jpg",
         content: "Merging legal expertise with digital rights advocacy started in this course.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -140,7 +140,7 @@ const testimonials = [
         name: "Yash Prajapati",
         role: "Power Grid",
         course: "Computer Science Engineering",
-        image: "AVI_0227 - Edited.jpg",
+        image: "/images/AVI_0227 - Edited.jpg",
         content: "CRISPR, gene editing, and ethical research\u2014it all came together in our labs.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -150,7 +150,7 @@ const testimonials = [
         name: "Jai Prakash Bairwa",
         role: "Civil Engneering at Adani Cement",
         course: "Civil Engineering",
-        image: "jppy.jpg",
+        image: "/images/jppy.jpg",
         content: "I work with global agencies now, but it all began with my professors\u2019 mentorship.",
         rating: 4,
         achievement: "Graduate From GECB"
@@ -160,7 +160,7 @@ const testimonials = [
         name: "Devansh Panchal",
         role: "Satellite Systems Engineer",
         course: "Computer Science Engineering",
-        image: "AVI_0109 - Edited.jpg",
+        image: "/images/AVI_0109 - Edited.jpg",
         content: "From blueprint to orbit\u2014this college launched more than just ideas.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -170,7 +170,7 @@ const testimonials = [
         name: "Hemant Ojha",
         role: "Digital Artist & NFT Creator",
         course: "Civil Engineering",
-        image: "hemant ojha.jpg",
+        image: "/images/hemant ojha.jpg",
         content: "I turned my passion for art into a career powered by tech and storytelling.",
         rating: 4,
         achievement: "Graduate From GECB"
@@ -180,7 +180,7 @@ const testimonials = [
         name: "Surendra Mahawar",
         role: "Architect at Shree Ji Architecture",
         course: "Civil Engineering",
-        image: "Surendra mahawar.jpg",
+        image: "/images/Surendra mahawar.jpg",
         content: "We're using AI to make life-saving diagnoses\u2014and it started with the knowledge I gained here.",
         rating: 5,
         achievement: "Graduate From GECB"
@@ -190,7 +190,7 @@ const testimonials = [
         name: "Kumkum Chouhan",
         role: "Digital Artist & NFT Creator",
         course: "Computer Science Engineering",
-        image: "kumkum.jpg",
+        image: "/images/kumkum.jpg",
         content: "I turned my passion for art into a career powered by tech and storytelling.",
         rating: 4,
         achievement: "Graduate From GECB"

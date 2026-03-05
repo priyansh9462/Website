@@ -74,7 +74,7 @@ export default function LoginPage() {
             </div>
 
             <div className="relative hidden overflow-hidden rounded-l-[1.5rem] lg:block">
-              <video className="absolute inset-0 h-full w-full object-cover" src="/login-bg.mp4" autoPlay loop muted playsInline/>
+              <video className="absolute inset-0 h-full w-full object-cover" src="/videos/login-bg.mp4" autoPlay loop muted playsInline/>
               <div className="absolute inset-0 bg-gradient-to-br from-black/35 via-black/20 to-black/10"/>
 
               <div className="absolute left-6 top-6 rounded-2xl bg-[#F5D45A] px-4 py-3 text-sm text-slate-900 shadow-lg">

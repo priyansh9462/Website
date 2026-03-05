@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="mt-8">
               <p className="uppercase text-muted-foreground text-xs mb-2">Degrees Awarded by:</p>
-              <img className="max-h-12 h-auto w-auto" src="RTU LOGO 2.png" alt="RTU University Logo"/>
+              <img className="max-h-12 h-auto w-auto" src="/images/RTU LOGO 2.png" alt="RTU University Logo"/>
             </div>
           
            
