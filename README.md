@@ -1,73 +1,53 @@
-# Welcome to your Lovable project
+## GECB Website Monorepo
 
-## Project info
+This repository contains both the **React/Vite frontend** and the **PHP backend** for the GECB website, organized as a simple monorepo.
 
-**URL**: https://lovable.dev/projects/d37f6db3-d5ba-4657-b013-8e28099e9a0a
+### Folder structure
 
-## How can I edit this code?
+- `frontend/` – React + Vite + TypeScript + Tailwind + shadcn-ui SPA  
+  - `public/` – static assets served by Vite  
+    - `images/` – logos, student photos (create/place images here)  
+    - `videos/` – `.mp4` files such as hero/background videos  
+  - `src/` – React application source (components, pages, hooks, lib, etc.)  
+  - `index.html` – Vite HTML entry  
+  - `package.json` – frontend dependencies and scripts  
+  - `vite.config.ts`, `tailwind.config.ts`, `tsconfig*.json`, `postcss.config.js`, `eslint.config.js` – tool configuration
 
-There are several ways of editing your application.
+- `backend/` – PHP backend (renamed from `college-backend-2`)  
+  - `admin/` – admin panel pages  
+  - `api/` – API endpoints consumed by the frontend  
+  - `config/` – database/auth/jwt/validation configuration  
+  - `uploads/` – uploaded files (course materials, gallery, events, etc.)  
+  - `index.php` – backend entry point
 
-**Use Lovable**
+- `.gitignore` – ignores `node_modules`, build artifacts, logs, editor files globally  
+- `README.md` – this project description
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d37f6db3-d5ba-4657-b013-8e28099e9a0a) and start prompting.
+### Running the frontend
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+From the repository root:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+cd frontend
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+This starts the Vite dev server (port is configured in `frontend/vite.config.ts`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Running the backend
 
-**Use GitHub Codespaces**
+The backend is plain PHP. Point your local web server (Apache, Nginx, XAMPP, etc.) at the `backend/` directory so that `backend/index.php` is the document root.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Backend configuration (database, JWT, etc.) is controlled via the files in `backend/config/`. Make sure your PHP environment has access to the correct credentials.
 
-## What technologies are used for this project?
+### Environment variables
 
-This project is built with:
+Frontend environment variables are configured via `frontend/.env` (example in `frontend/.env.example`).  
+For example, the Scholr API URL is defined as:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```env
+VITE_SCHOLR_API_URL=http://localhost:8080/api/v1
+```
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/d37f6db3-d5ba-4657-b013-8e28099e9a0a) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Restart the Vite dev server after changing environment variables.

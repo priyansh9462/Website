@@ -108,7 +108,7 @@ const Header = () => {
       <div ref={logoRef} className="flex items-center">
         <div className="flex items-center justify-center p-5 z-[1] w-full md:w-full">
           <a href="/" className="block w-full">
-            <img src="ENGNEERING COLLEGE BARAN.png" alt="University Logo" className="h-full md:w-32 w-full min-w-[60px] object-contain translate-x-4"/>
+            <img src="/images/ENGNEERING COLLEGE BARAN.png" alt="University Logo" className="h-full md:w-32 w-full min-w-[60px] object-contain translate-x-4"/>
           </a>
         </div>
       </div>

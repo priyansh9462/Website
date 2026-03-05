@@ -179,7 +179,7 @@ const AboutSection = () => {
           
           <div ref={imageRef} className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
-              <img src="IMG_0189 - Edited.jpg" alt="University Excellence" className="w-full h-[700px] object-cover group-hover:scale-110 transition-all duration-700"/>
+              <img src="/images/IMG_0189 - Edited.jpg" alt="University Excellence" className="w-full h-[700px] object-cover group-hover:scale-110 transition-all duration-700"/>
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent"></div>
             </div>
 

@@ -171,7 +171,7 @@ const Experience = () => {
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-primary/70 z-10"></div>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-110" style={{
-            backgroundImage: "url('1.jpg')"
+            backgroundImage: "url('/images/1.jpg')"
         }}></div>
         
         <div className="relative z-20 container mx-auto px-6 text-center text-white">

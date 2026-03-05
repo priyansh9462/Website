@@ -41,7 +41,7 @@ export const leadershipData = [
         title: "Vice-Chancellor",
         education: "Ph.D, M.Tech, B.E, FIE, FICS, FUWA, FIAH, FIEE, FIGS, FIIBE, FIWRS",
         experience: "25+ Years in Higher Education",
-        image: "DSC07351.JPG",
+        image: "/images/DSC07351.JPG",
         achievements: [
             "Dr. A.P.J Abdul Kalam Memorial Award 2016.",
             "Unnat Bharat Sewashri Award - 2019.",
@@ -58,7 +58,7 @@ export const leadershipData = [
         title: "Principal ",
         education: "Ph.D, M.Tech, B.E, Diploma",
         experience: "20+ Years in Academic Leadership",
-        image: "Principal sir.png",
+        image: "/images/Principal sir.png",
         achievements: [
             "Research Publications Journals: 20+",
             "Research Publications Conference: 20+",
@@ -74,7 +74,7 @@ export const leadershipData = [
         title: "Assistant Professor",
         education: "M.Tech, B.Tech",
         experience: "18+ Years in Education Management",
-        image: "vishal.jpg",
+        image: "/images/vishal.jpg",
         achievements: [
             "Vice Principal",
             "FIC (Academic)",
@@ -90,7 +90,7 @@ export const leadershipData = [
         title: "Assistant Professor",
         education: "M.Tech, B.Tech",
         experience: "15+ Years of Academic Excellence",
-        image: "mahaveer2.jpg",
+        image: "/images/mahaveer2.jpg",
         achievements: [
             "FIC (Finance)",
             "FIC (Procator)",

@@ -96,7 +96,7 @@ const Hero = () => {
 
       
       <video ref={parallaxRef} className="absolute inset-0 w-full h-full object-cover scale-110" autoPlay muted loop playsInline>
-        <source src="Untitled design (1).mp4" type="video/mp4"/>
+        <source src="/videos/Untitled design (1).mp4" type="video/mp4"/>
         Your browser does not support the video tag.
       </video>
 
@@ -119,7 +119,7 @@ const Hero = () => {
           </div>
 
           
-          <img ref={headingRef} src="ENGNEERING COLLEGE BARAN (2).png" alt="Logo" className="mx-auto mb-10 w-70 md:w-96"/>
+          <img ref={headingRef} src="/images/ENGNEERING COLLEGE BARAN (2).png" alt="Logo" className="mx-auto mb-10 w-70 md:w-96"/>
 
           
          <p ref={subtitleRef} className="text-4xl md:text-5xl mb-12 max-w-3xl mx-auto font-900 leading-relaxed block text-white" style={{ fontFamily: "'Rock Salt', sans-serif" }}>
