@@ -12,7 +12,7 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-gray-600">
-            Since this app uses localStorage (no external integrations), you can reset all data here.
+            Most CMS data is stored in localStorage. Use this to reset local demo records and auth session data.
           </p>
           <div className="flex items-center gap-2">
             <Button variant="destructive" onClick={() => {

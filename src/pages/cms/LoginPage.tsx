@@ -7,13 +7,13 @@ import CmsFooter from "@/components/app-shell/CmsFooter";
 type Role = "admin" | "faculty" | "student";
 export default function LoginPage() {
     const [selectedRole, setSelectedRole] = useState<Role>("faculty");
-    const [email, setEmail] = useState("");
+    const [collegeId, setCollegeId] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
         const roleForDb = selectedRole === "faculty" ? "teacher" : selectedRole;
-        const { user, error } = await auth.signIn(email, password, roleForDb);
+        const { user, error } = await auth.signIn(collegeId, password, roleForDb);
         if (user) {
             console.log("Logged in successfully:", user);
             navigate("/dashboard");
@@ -58,7 +58,7 @@ export default function LoginPage() {
               </div>
 
               <form onSubmit={handleSignIn} className="space-y-4">
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email address" className="w-full rounded-full border border-slate-300 bg-white/85 px-5 py-3 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-[#112F68]/15" required/>
+                <input type="text" value={collegeId} onChange={(e) => setCollegeId(e.target.value)} placeholder="College ID (e.g. ST-2026-01)" className="w-full rounded-full border border-slate-300 bg-white/85 px-5 py-3 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-[#112F68]/15" required/>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (min 6 chars)" className="w-full rounded-full border border-slate-300 bg-white/85 px-5 py-3 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-[#112F68]/15" required minLength={6}/>
                 <button type="submit" className="w-full rounded-full bg-[#F5D45A] py-3 text-lg font-semibold text-slate-900 transition-colors hover:bg-[#efca43]">
                   Sign In

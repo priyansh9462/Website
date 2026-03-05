@@ -1,3 +1,5 @@
+import { extractObjectByKeys, extractStringByKeys, scholrApiClient, scholrTokenStorage } from "./scholr-api";
+
 export type Student = {
     id: string;
     first_name: string;
@@ -35,58 +37,196 @@ export type Notice = {
     file_data_url?: string;
     created_at: string;
 };
+
+const AUTH_USER_KEY = "auth_user";
+
+const asRecord = (value: unknown): Record<string, unknown> | null => {
+    return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
+};
+
+const decodeJwtPayload = (token: string): Record<string, unknown> | null => {
+    const parts = token.split(".");
+    if (parts.length < 2) {
+        return null;
+    }
+    const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+    try {
+        const parsed = JSON.parse(atob(padded));
+        return asRecord(parsed);
+    }
+    catch {
+        return null;
+    }
+};
+
+const toAppRole = (backendRole: string | null | undefined, fallback: User["role"]): User["role"] => {
+    if (!backendRole) {
+        return fallback;
+    }
+    const role = backendRole.toLowerCase();
+    if (role.includes("admin")) {
+        return "admin";
+    }
+    if (role.includes("teacher") || role.includes("faculty")) {
+        return "teacher";
+    }
+    if (role.includes("student")) {
+        return "student";
+    }
+    return fallback;
+};
+
+const buildUserFromSources = ({
+    collegeId,
+    requestedRole,
+    profileData,
+    loginData,
+    tokenPayload,
+}: {
+    collegeId: string;
+    requestedRole: User["role"];
+    profileData?: unknown;
+    loginData?: unknown;
+    tokenPayload?: Record<string, unknown> | null;
+}): User => {
+    const profileCandidate = extractObjectByKeys(profileData, ["user", "data", "result", "payload"]) ?? asRecord(profileData);
+    const loginCandidate = extractObjectByKeys(loginData, ["user", "profile", "account"]) ?? asRecord(loginData);
+    const source = profileCandidate ?? loginCandidate ?? tokenPayload ?? {};
+
+    const firstName = extractStringByKeys(source, ["firstName", "first_name", "given_name"]);
+    const lastName = extractStringByKeys(source, ["lastName", "last_name", "family_name"]);
+    const fullName = extractStringByKeys(source, ["name", "fullName", "full_name"]);
+    const composedName = [firstName, lastName].filter(Boolean).join(" ").trim();
+    const backendRole =
+        extractStringByKeys(source, ["role", "userRole", "user_role"]) ??
+            extractStringByKeys(tokenPayload, ["role"]);
+
+    return {
+        id: extractStringByKeys(source, ["id", "userId", "user_id", "sub", "collegeId", "college_id"]) ??
+            extractStringByKeys(tokenPayload, ["sub", "collegeId", "college_id"]) ??
+            collegeId,
+        email: extractStringByKeys(source, ["email", "emailId", "mail"]) ??
+            extractStringByKeys(tokenPayload, ["email"]) ??
+            `${collegeId.toLowerCase()}@college.local`,
+        role: toAppRole(backendRole, requestedRole),
+        created_at: extractStringByKeys(source, ["created_at", "createdAt"]) ?? new Date().toISOString(),
+        name: fullName ?? (composedName || undefined),
+    };
+};
+
 export const auth = {
-    signIn: (email: string, password: string, role: "admin" | "teacher" | "student"): Promise<{
+    signIn: async (collegeId: string, password: string, role: "admin" | "teacher" | "student"): Promise<{
         user: User | null;
         error: string | null;
     }> => {
-        return new Promise((resolve) => {
-            if (email && password.length >= 6) {
-                const user: User = {
-                    id: Date.now().toString(),
-                    email,
-                    role: role,
-                    created_at: new Date().toISOString(),
-                };
-                localStorage.setItem("auth_user", JSON.stringify(user));
-                resolve({ user, error: null });
+        if (!collegeId || password.length < 6) {
+            return { user: null, error: "Invalid credentials" };
+        }
+        try {
+            const loginData = await scholrApiClient.auth.login({ collegeId, password });
+            const accessToken = extractStringByKeys(loginData, ["accessToken", "access_token", "token", "jwt"]);
+            const refreshToken = extractStringByKeys(loginData, ["refreshToken", "refresh_token"]);
+            if (accessToken) {
+                scholrTokenStorage.setAccessToken(accessToken);
             }
-            else {
-                resolve({ user: null, error: "Invalid credentials" });
+            if (refreshToken) {
+                scholrTokenStorage.setRefreshToken(refreshToken);
             }
-        });
+            const tokenPayload = accessToken ? decodeJwtPayload(accessToken) : null;
+            let profileData: unknown = null;
+            try {
+                profileData = await scholrApiClient.users.me();
+            }
+            catch {
+                profileData = null;
+            }
+            const user = buildUserFromSources({
+                collegeId,
+                requestedRole: role,
+                profileData,
+                loginData,
+                tokenPayload,
+            });
+            localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
+            return { user, error: null };
+        }
+        catch (error) {
+            const message = extractStringByKeys((error as { response?: { data?: unknown } }).response?.data, [
+                "message",
+                "error",
+                "detail",
+            ]) ?? "Login failed. Please check your College ID and password.";
+            scholrTokenStorage.clear();
+            localStorage.removeItem(AUTH_USER_KEY);
+            return { user: null, error: message };
+        }
     },
-    signUp: (email: string, password: string): Promise<{
+    signUp: async (collegeId: string, password: string): Promise<{
         user: User | null;
         error: string | null;
     }> => {
-        return new Promise((resolve) => {
-            if (email && password.length >= 6) {
-                const user: User = {
-                    id: Date.now().toString(),
-                    email,
-                    role: "student",
-                    created_at: new Date().toISOString(),
-                };
-                localStorage.setItem("auth_user", JSON.stringify(user));
-                resolve({ user, error: null });
-            }
-            else {
-                resolve({ user: null, error: "Password must be at least 6 characters" });
-            }
-        });
+        if (!collegeId || password.length < 6) {
+            return { user: null, error: "Password must be at least 6 characters" };
+        }
+        try {
+            await scholrApiClient.auth.signup({ collegeId, password });
+            const user: User = {
+                id: collegeId,
+                email: `${collegeId.toLowerCase()}@college.local`,
+                role: "student",
+                created_at: new Date().toISOString(),
+            };
+            return { user, error: null };
+        }
+        catch (error) {
+            const message = extractStringByKeys((error as { response?: { data?: unknown } }).response?.data, [
+                "message",
+                "error",
+                "detail",
+            ]) ?? "Signup failed. Please try again.";
+            return { user: null, error: message };
+        }
     },
-    signOut: (): Promise<{
+    signOut: async (): Promise<{
         error: string | null;
     }> => {
-        return new Promise((resolve) => {
-            localStorage.removeItem("auth_user");
-            resolve({ error: null });
-        });
+        try {
+            await scholrApiClient.auth.logout();
+        }
+        catch {
+        }
+        scholrTokenStorage.clear();
+        localStorage.removeItem(AUTH_USER_KEY);
+        return { error: null };
     },
     getUser: (): User | null => {
-        const stored = localStorage.getItem("auth_user");
-        return stored ? JSON.parse(stored) : null;
+        const stored = localStorage.getItem(AUTH_USER_KEY);
+        if (stored) {
+            try {
+                return JSON.parse(stored);
+            }
+            catch {
+                localStorage.removeItem(AUTH_USER_KEY);
+            }
+        }
+        const accessToken = scholrTokenStorage.getAccessToken();
+        if (!accessToken) {
+            return null;
+        }
+        const tokenPayload = decodeJwtPayload(accessToken);
+        if (!tokenPayload) {
+            return null;
+        }
+        const collegeId = extractStringByKeys(tokenPayload, ["sub", "collegeId", "college_id"]) ?? "user";
+        const role = toAppRole(extractStringByKeys(tokenPayload, ["role"]), "student");
+        const user = buildUserFromSources({
+            collegeId,
+            requestedRole: role,
+            tokenPayload,
+        });
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
+        return user;
     },
     quickLogin: (role: "admin" | "teacher" | "student") => {
         const roleEmail = role === "admin" ? "admin@school.com" : role === "teacher" ? "teacher@school.com" : "student@school.com";
@@ -98,7 +238,7 @@ export const auth = {
             name,
             created_at: new Date().toISOString(),
         };
-        localStorage.setItem("auth_user", JSON.stringify(user));
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
         return { user };
     },
 };
