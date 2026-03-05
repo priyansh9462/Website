@@ -1,31 +1,13 @@
-"use client"
-
-import type { ReactNode } from "react"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-
-export default function ConfirmDelete({
-  children,
-  title = "Delete item",
-  description = "This action cannot be undone.",
-  onConfirm,
-}: {
-  children: ReactNode
-  title?: string
-  description?: string
-  onConfirm: () => void
+"use client";
+import type { ReactNode } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, } from "@/components/ui/alert-dialog";
+export default function ConfirmDelete({ children, title = "Delete item", description = "This action cannot be undone.", onConfirm, }: {
+    children: ReactNode;
+    title?: string;
+    description?: string;
+    onConfirm: () => void;
 }) {
-  return (
-    <AlertDialog>
+    return (<AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -39,6 +21,5 @@ export default function ConfirmDelete({
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
-    </AlertDialog>
-  )
+    </AlertDialog>);
 }

@@ -1,19 +1,16 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Plus, MessageSquare, Calendar, BarChart3, Settings } from 'lucide-react';
-
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Plus, MessageSquare, Calendar, BarChart3, Settings } from "lucide-react";
 interface OverviewTabProps {
-  onAnimateAdd: (type: 'course' | 'testimonial' | 'event') => void;
+    onAnimateAdd: (type: "course" | "testimonial" | "event") => void;
 }
-
 const OverviewTab: React.FC<OverviewTabProps> = ({ onAnimateAdd }) => {
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    return (<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
+            <BarChart3 className="h-5 w-5"/>
             Recent Activity
           </CardTitle>
         </CardHeader>
@@ -38,27 +35,25 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ onAnimateAdd }) => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
+            <Settings className="h-5 w-5"/>
             Quick Actions
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Button className="w-full justify-start" onClick={() => onAnimateAdd('course')}>
-            <Plus className="h-4 w-4 mr-2" />
+          <Button className="w-full justify-start" onClick={() => onAnimateAdd("course")}>
+            <Plus className="h-4 w-4 mr-2"/>
             Add New Course
           </Button>
-          <Button variant="outline" className="w-full justify-start" onClick={() => onAnimateAdd('testimonial')}>
-            <MessageSquare className="h-4 w-4 mr-2" />
+          <Button variant="outline" className="w-full justify-start" onClick={() => onAnimateAdd("testimonial")}>
+            <MessageSquare className="h-4 w-4 mr-2"/>
             Add Testimonial
           </Button>
-          <Button variant="outline" className="w-full justify-start" onClick={() => onAnimateAdd('event')}>
-            <Calendar className="h-4 w-4 mr-2" />
+          <Button variant="outline" className="w-full justify-start" onClick={() => onAnimateAdd("event")}>
+            <Calendar className="h-4 w-4 mr-2"/>
             Add Event
           </Button>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
 };
-
 export default OverviewTab;

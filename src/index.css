@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Award-winning design system with premium colors and gradients */
+
 
 @layer base {
   :root {
@@ -128,7 +128,7 @@
   }
 }
 
-/* Award-winning animations with premium timing */
+
 @keyframes float-premium {
   0%, 100% {
     transform: translateY(0) rotate(0deg);
@@ -188,12 +188,12 @@
   animation: glow 2s ease-in-out infinite;
 }
 
-/* Premium scroll offset for fixed header */
+
 section {
   scroll-margin-top: 100px;
 }
 
-/* Premium focus states */
+
 button:focus-visible,
 a:focus-visible {
   outline: 2px solid hsl(var(--primary));
@@ -201,7 +201,7 @@ a:focus-visible {
   border-radius: 0.5rem;
 }
 
-/* Premium scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }

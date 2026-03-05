@@ -1,43 +1,37 @@
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
 const Footer = () => {
-  return (
-    <footer className="bg-card text-card-foreground relative">
-      {/* Main Footer */}
+    return (<footer className="bg-card text-card-foreground relative">
+      
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* University Info */}
+          
           <div className="lg:col-span-1">
             <div className="mt-8">
               <p className="uppercase text-muted-foreground text-xs mb-2">Degrees Awarded by:</p>
-              <img 
-                className="max-h-12 h-auto w-auto" 
-                src="RTU LOGO 2.png"  // Update with correct path
-                alt="RTU University Logo" 
-              />
+              <img className="max-h-12 h-auto w-auto" src="RTU LOGO 2.png" alt="RTU University Logo"/>
             </div>
           
            
             <div className="flex space-x-4">
               <Button size="sm" variant="outline" className="w-10 h-10 p-0">
-                <Facebook className="w-4 h-4" />
+                <Facebook className="w-4 h-4"/>
               </Button>
               <Button size="sm" variant="outline" className="w-10 h-10 p-0">
-                <Twitter className="w-4 h-4" />
+                <Twitter className="w-4 h-4"/>
               </Button>
               <Button size="sm" variant="outline" className="w-10 h-10 p-0">
-                <Instagram className="w-4 h-4" />
+                <Instagram className="w-4 h-4"/>
               </Button>
               <Button size="sm" variant="outline" className="w-10 h-10 p-0">
-                <Linkedin className="w-4 h-4" />
+                <Linkedin className="w-4 h-4"/>
               </Button>
             </div>
 
-            {/* Degrees Awarded Section - Added Here */}
+            
             
           </div>
-          {/* Quick Links */}
+          
           <div>
             <h3 className="font-semibold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
@@ -50,11 +44,11 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
+          
           <div>
             <h3 className="font-semibold text-lg mb-6">Support</h3>
             <ul className="space-y-3">
-             {/* <li><a href="#help" className="text-muted-foreground hover:text-primary transition-colors">Help Center</a></li> */}
+             
               <li><a href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact Us</a></li>
               <li><a href="#careers" className="text-muted-foreground hover:text-primary transition-colors">Careers</a></li>
               <li><a href="#library" className="text-muted-foreground hover:text-primary transition-colors">Library</a></li>
@@ -63,12 +57,12 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          
           <div>
             <h3 className="font-semibold text-lg mb-6">Contact Info</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0"/>
                 <div>
                   <p className="text-muted-foreground">Government Engineering College, Baran</p>
                   <p className="text-muted-foreground">Baran, Rajasthan, India</p>
@@ -77,10 +71,10 @@ const Footer = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-<a href="tel:94148101144, 9928709032" class="text-primary font-serif text-xl"> 94148101144, 9928709032  </a>    </div>
+                <Phone className="w-5 h-5 text-primary flex-shrink-0"/>
+    <a href="tel:94148101144, 9928709032" class="text-primary font-serif text-xl"> 94148101144, 9928709032  </a>    </div>
               <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                <Mail className="w-5 h-5 text-primary flex-shrink-0"/>
                 <a href="mailto: principalgecbaran@gmail.com" target="_blank" rel="noopener">principalgecbaran@gmail.com</a>
               </div>
             </div>
@@ -88,7 +82,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Footer */}
+      
       <div className="border-t border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
@@ -103,8 +97,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
 };
-
 export default Footer;
