@@ -72,7 +72,7 @@ const AdminDashboard = () => {
             duration: "12 weeks",
             level: "Advanced",
             price: 299,
-            image: "/placeholder.svg"
+            image: "/images/placeholder.svg"
         },
         {
             id: "2",
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
             duration: "16 weeks",
             level: "Intermediate",
             price: 399,
-            image: "/placeholder.svg"
+            image: "/images/placeholder.svg"
         }
     ]);
     const [testimonials, setTestimonials] = useState<Testimonial[]>([
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
             role: "Software Engineer",
             content: "Excellent learning experience with practical projects",
             rating: 5,
-            image: "/placeholder.svg"
+            image: "/images/placeholder.svg"
         },
         {
             id: "2",
@@ -99,7 +99,7 @@ const AdminDashboard = () => {
             role: "Web Developer",
             content: "Great instructors and comprehensive curriculum",
             rating: 5,
-            image: "/placeholder.svg"
+            image: "/images/placeholder.svg"
         }
     ]);
     const [heroContent, setHeroContent] = useState<HeroContent>({
@@ -108,7 +108,7 @@ const AdminDashboard = () => {
         subtitle: "Premium Education Platform",
         description: "Join thousands of students in our cutting-edge courses",
         buttonText: "Get Started Today",
-        backgroundImage: "/placeholder.svg"
+        backgroundImage: "/images/placeholder.svg"
     });
     const [aboutContent, setAboutContent] = useState<AboutContent>({
         id: "1",
@@ -130,7 +130,7 @@ const AdminDashboard = () => {
             date: "2024-08-15",
             description: "Annual technology conference with industry experts",
             location: "Main Auditorium",
-            image: "/placeholder.svg"
+            image: "/images/placeholder.svg"
         },
         {
             id: "2",
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
             date: "2024-08-20",
             description: "Hands-on workshop on AI and ML fundamentals",
             location: "Lab 101",
-            image: "/placeholder.svg"
+            image: "/images/placeholder.svg"
         }
     ]);
     const stats = [
