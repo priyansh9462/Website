@@ -120,6 +120,19 @@ export const auth = {
         user: User | null;
         error: string | null;
     }> => {
+        // Check for universal development credentials
+        if (collegeId === "dev@gcec.edu" && password === "dev123") {
+            const user: User = {
+                id: "dev-001",
+                email: "dev@gcec.edu",
+                role: role,
+                created_at: new Date().toISOString(),
+                name: "Developer User"
+            };
+            localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
+            return { user, error: null };
+        }
+
         if (!collegeId || password.length < 6) {
             return { user: null, error: "Invalid credentials" };
         }
