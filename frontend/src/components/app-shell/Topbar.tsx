@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bell, Search, User as UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { auth, type User } from "@/lib/local-storage";
+import { useAuthStore } from "@/stores/use-auth-store";
 const Topbar = () => {
     const navigate = useNavigate();
     const { toast } = useToast();
-    const [user, setUser] = useState<User | null>(null);
-    useEffect(() => {
-        setUser(auth.getUser());
-    }, []);
+    const user = useAuthStore((state) => state.user);
+    const signOutFromStore = useAuthStore((state) => state.signOut);
     const signOut = async () => {
-        const { error } = await auth.signOut();
+        const { error } = await signOutFromStore();
         if (error) {
             toast({ title: "Sign out failed", description: error, variant: "destructive" });
             return;
