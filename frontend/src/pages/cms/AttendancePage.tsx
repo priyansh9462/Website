@@ -24,6 +24,7 @@ const SCANNER_ID = "qr-reader-container";
 export default function AttendancePage() {
     const user = useAuthStore((state) => state.user);
     const canManage = user?.role !== "student";
+    const defaultTab = canManage ? "manual" : "qr";
     const [classes, setClasses] = useState<any[]>([]);
     const [students, setStudents] = useState<any[]>([]);
     const [subjects, setSubjects] = useState<any[]>([]);
@@ -250,10 +251,10 @@ export default function AttendancePage() {
     return (<div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Attendance Management</h1>
-        <p className="text-gray-600">Track and manage student attendance records</p>
+        <p className="text-gray-600">{canManage ? "Track and manage student attendance records" : "Scan the subject QR to mark your attendance"}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {canManage && (<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="border-l-4 border-l-teal-500">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-gray-600">Class Students</CardTitle>
@@ -286,7 +287,7 @@ export default function AttendancePage() {
             <p className="text-xs text-gray-500 mt-1">Attendance entries</p>
           </CardContent>
         </Card>
-      </div>
+      </div>)}
 
       <Card>
         <CardHeader>
@@ -296,7 +297,7 @@ export default function AttendancePage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {canManage && (<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Select Class</label>
               <Select value={selectedClassId} onValueChange={setSelectedClassId}>
@@ -314,15 +315,15 @@ export default function AttendancePage() {
               <label className="text-sm font-medium text-gray-700">Date</label>
               <Input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="w-full"/>
             </div>
-          </div>
+          </div>)}
 
-          <Tabs defaultValue="manual" className="space-y-4">
-            <TabsList className="w-full justify-start">
-              <TabsTrigger value="manual">Manual</TabsTrigger>
-              <TabsTrigger value="qr">QR Attendance</TabsTrigger>
-            </TabsList>
+          <Tabs defaultValue={defaultTab} className="space-y-4">
+            {canManage && (<TabsList className="w-full justify-start">
+                <TabsTrigger value="manual">Manual</TabsTrigger>
+                <TabsTrigger value="qr">QR Attendance</TabsTrigger>
+              </TabsList>)}
 
-            <TabsContent value="manual" className="space-y-6">
+            {canManage && (<TabsContent value="manual" className="space-y-6">
               {existingAttendance.length > 0 && (<div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm text-blue-800">
                     <strong>Note:</strong> Manual attendance already recorded for this date. You can update the records below.
@@ -382,7 +383,7 @@ export default function AttendancePage() {
                       Save Attendance
                     </Button>)}
                 </div>)}
-            </TabsContent>
+            </TabsContent>)}
 
             <TabsContent value="qr" className="space-y-6">
               {canManage ? (<div className="space-y-4">

@@ -4,17 +4,17 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/use-auth-store";
 const items = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ["admin", "teacher", "student"] },
+    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ["admin", "teacher"] },
     { href: "/notices", label: "Notices", icon: Bell, roles: ["admin"] },
     { href: "/students", label: "Students", icon: Users, roles: ["admin", "teacher"] },
     { href: "/teachers", label: "Teachers", icon: GraduationCap, roles: ["admin"] },
     { href: "/classes", label: "Classes", icon: School, roles: ["admin"] },
     { href: "/subjects", label: "Subjects", icon: BookOpen, roles: ["admin"] },
     { href: "/attendance", label: "Attendance", icon: ClipboardCheck, roles: ["admin", "teacher", "student"] },
-    { href: "/grades", label: "Exams", icon: BarChart3, roles: ["admin", "teacher", "student"] },
-    { href: "/timetable", label: "Timetable", icon: Calendar, roles: ["admin", "teacher", "student"] },
-    { href: "/fees", label: "Fee Management", icon: CreditCard, roles: ["admin", "student"] },
-    { href: "/settings", label: "Settings", icon: Settings, roles: ["admin", "teacher", "student"] },
+    { href: "/grades", label: "Exams", icon: BarChart3, roles: ["admin", "teacher"] },
+    { href: "/timetable", label: "Timetable", icon: Calendar, roles: ["admin", "teacher"] },
+    { href: "/fees", label: "Fee Management", icon: CreditCard, roles: ["admin"] },
+    { href: "/settings", label: "Settings", icon: Settings, roles: ["admin", "teacher"] },
 ];
 const Sidebar = () => {
     const location = useLocation();

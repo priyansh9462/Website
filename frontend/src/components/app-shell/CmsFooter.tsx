@@ -48,9 +48,9 @@ const CmsFooter = ({ className, variant = "panel" }: CmsFooterProps) => {
               {index < footerLinks.length - 1 && <span className="text-slate-400">|</span>}
             </div>))}
         </div>
-        <p className={cn("text-[11px] font-medium", variant === "panel" ? "text-slate-500" : "text-slate-600")}>
-          College Management Portal
-        </p>
+        {variant === "panel" ? (<p className="text-[11px] font-medium text-slate-500">
+            College Management Portal
+          </p>) : null}
       </div>
     </footer>);
 };

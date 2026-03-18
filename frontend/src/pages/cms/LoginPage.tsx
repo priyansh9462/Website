@@ -4,7 +4,9 @@ import { Users, GraduationCap, School } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/use-auth-store";
 import CmsFooter from "@/components/app-shell/CmsFooter";
+
 type Role = "admin" | "faculty" | "student";
+
 export default function LoginPage() {
     const [selectedRole, setSelectedRole] = useState<Role>("faculty");
     const [collegeId, setCollegeId] = useState("");
@@ -40,81 +42,65 @@ export default function LoginPage() {
         const roleForDb = selectedRole === "faculty" ? "teacher" : selectedRole;
         const offlineLogin = quickLogin(roleForDb, trimmedCollegeId);
         if (offlineLogin.user) {
-            navigate("/dashboard");
+            navigate(roleForDb === "student" ? "/attendance" : "/dashboard");
             return;
         }
         setFormError("Login failed. Please check your credentials.");
     };
-    return (<div className="min-h-screen bg-[#959DAA]">
-      <div className="min-h-screen p-4 sm:p-6">
-        <div className="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-6xl items-center justify-center">
-          <div className="grid w-full overflow-hidden rounded-[2rem] border border-black/10 bg-[#F4F0DE] shadow-[0_30px_80px_rgba(15,23,42,0.28)] lg:grid-cols-[0.92fr_1.08fr]">
-            <div className="p-7 sm:p-9 lg:p-10">
-              <div className="mb-8 inline-flex items-center rounded-full border border-slate-400 bg-white/50 px-5 py-2 text-sm text-slate-700">
-                GECB Portal
-              </div>
+    return (<div className="relative min-h-screen overflow-hidden bg-slate-950">
+      <video className="absolute inset-0 h-full w-full object-cover" src="/videos/login-bg.mp4" autoPlay loop muted playsInline/>
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(4,15,37,0.86),rgba(15,55,128,0.64),rgba(255,255,255,0.18))]"/>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.22),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.32),transparent_34%)]"/>
 
-              <div className="mb-7">
-                <h1 className="text-4xl font-semibold tracking-tight text-slate-900">Sign In</h1>
-                <p className="mt-2 text-slate-600">College Management System</p>
-              </div>
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
+        <div className="w-full max-w-xl rounded-[2rem] border border-white/35 bg-white/90 p-6 shadow-[0_30px_90px_rgba(3,15,41,0.45)] backdrop-blur-xl sm:p-8 lg:p-10">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Sign In</h1>
+            <p className="mt-3 text-sm font-medium uppercase tracking-[0.28em] text-blue-700/80">
+              Government Engineering College Baran
+            </p>
+          </div>
 
-              <div className="mb-6 grid grid-cols-3 gap-3">
-                <button type="button" onClick={() => setSelectedRole("admin")} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${selectedRole === "admin"
-            ? "border-[#112F68] bg-[#112F68] text-white shadow-md"
-            : "border-slate-300 bg-white/70 text-slate-700 hover:border-slate-500"}`}>
-                  <Users className="mx-auto mb-2 h-5 w-5" strokeWidth={selectedRole === "admin" ? 2.5 : 2}/>
-                  Admin
-                </button>
-                <button type="button" onClick={() => setSelectedRole("faculty")} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${selectedRole === "faculty"
-            ? "border-[#112F68] bg-[#112F68] text-white shadow-md"
-            : "border-slate-300 bg-white/70 text-slate-700 hover:border-slate-500"}`}>
-                  <GraduationCap className="mx-auto mb-2 h-5 w-5" strokeWidth={selectedRole === "faculty" ? 2.5 : 2}/>
-                  Faculty
-                </button>
-                <button type="button" onClick={() => setSelectedRole("student")} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${selectedRole === "student"
-            ? "border-[#112F68] bg-[#112F68] text-white shadow-md"
-            : "border-slate-300 bg-white/70 text-slate-700 hover:border-slate-500"}`}>
-                  <School className="mx-auto mb-2 h-5 w-5" strokeWidth={selectedRole === "student" ? 2.5 : 2}/>
-                  Student
-                </button>
-              </div>
+          <div className="mb-6 grid grid-cols-3 gap-3">
+            <button type="button" onClick={() => setSelectedRole("admin")} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${selectedRole === "admin"
+            ? "border-blue-800 bg-blue-800 text-white shadow-[0_16px_40px_rgba(30,64,175,0.26)]"
+            : "border-blue-200 bg-white text-slate-700 hover:border-blue-400 hover:bg-blue-50"}`}>
+              <Users className="mx-auto mb-2 h-5 w-5" strokeWidth={selectedRole === "admin" ? 2.5 : 2}/>
+              Admin
+            </button>
+            <button type="button" onClick={() => setSelectedRole("faculty")} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${selectedRole === "faculty"
+            ? "border-blue-800 bg-blue-800 text-white shadow-[0_16px_40px_rgba(30,64,175,0.26)]"
+            : "border-blue-200 bg-white text-slate-700 hover:border-blue-400 hover:bg-blue-50"}`}>
+              <GraduationCap className="mx-auto mb-2 h-5 w-5" strokeWidth={selectedRole === "faculty" ? 2.5 : 2}/>
+              Faculty
+            </button>
+            <button type="button" onClick={() => setSelectedRole("student")} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${selectedRole === "student"
+            ? "border-blue-800 bg-blue-800 text-white shadow-[0_16px_40px_rgba(30,64,175,0.26)]"
+            : "border-blue-200 bg-white text-slate-700 hover:border-blue-400 hover:bg-blue-50"}`}>
+              <School className="mx-auto mb-2 h-5 w-5" strokeWidth={selectedRole === "student" ? 2.5 : 2}/>
+              Student
+            </button>
+          </div>
 
-              <form onSubmit={handleSignIn} className="space-y-4">
-                <input type="text" value={collegeId} onChange={(e) => setCollegeId(e.target.value)} placeholder="College ID (e.g. 22EBRCS004)" className="w-full rounded-full border border-slate-300 bg-white/85 px-5 py-3 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-[#112F68]/15" required autoComplete="username"/>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (First letter capital + 1 number + 1 special)" className="w-full rounded-full border border-slate-300 bg-white/85 px-5 py-3 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-4 focus:ring-[#112F68]/15" required autoComplete="current-password"/>
-                <p className="text-xs text-slate-500">Password must start with a capital letter and include one number and one special character.</p>
-                {formError ? <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{formError}</div> : null}
-                <button type="submit" className="w-full rounded-full bg-[#F5D45A] py-3 text-lg font-semibold text-slate-900 transition-colors hover:bg-[#efca43]">
-                  Sign In
-                </button>
-              </form>
+          <form onSubmit={handleSignIn} className="space-y-4">
+            <input type="text" value={collegeId} onChange={(e) => setCollegeId(e.target.value)} placeholder="College ID (e.g. 22EBRCS004)" className="w-full cursor-text rounded-2xl border border-blue-200 bg-white px-5 py-3 text-slate-950 caret-blue-700 shadow-[inset_0_1px_2px_rgba(15,23,42,0.06)] outline-none transition-all placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-100" required autoComplete="username"/>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (First letter capital + 1 number + 1 special)" className="w-full cursor-text rounded-2xl border border-blue-200 bg-white px-5 py-3 text-slate-950 caret-blue-700 shadow-[inset_0_1px_2px_rgba(15,23,42,0.06)] outline-none transition-all placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-100" required autoComplete="current-password"/>
+            <p className="text-xs leading-relaxed text-slate-500">Password must start with a capital letter and include one number and one special character.</p>
+            {formError ? <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{formError}</div> : null}
+            <button type="submit" className="w-full rounded-2xl bg-gradient-to-r from-blue-800 to-blue-600 py-3.5 text-lg font-semibold text-white shadow-[0_18px_45px_rgba(30,64,175,0.28)] transition-all hover:from-blue-900 hover:to-blue-700">
+              Sign In
+            </button>
+          </form>
 
-              <div className="mt-6 text-center text-sm text-slate-600">
-                Return to{" "}
-                <Link to="/" className="font-semibold text-[#112F68] hover:underline">
-                  Main Website
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative hidden overflow-hidden rounded-l-[1.5rem] lg:block">
-              <video className="absolute inset-0 h-full w-full object-cover" src="/videos/login-bg.mp4" autoPlay loop muted playsInline/>
-              <div className="absolute inset-0 bg-gradient-to-br from-black/35 via-black/20 to-black/10"/>
-
-              <div className="absolute left-6 top-6 rounded-2xl bg-[#F5D45A] px-4 py-3 text-sm text-slate-900 shadow-lg">
-                <div className="font-semibold">Campus Update</div>
-                <div className="text-xs opacity-80">Academic Session Active</div>
-              </div>
-
-              <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/30 bg-white/15 p-4 text-white backdrop-blur-sm">
-                <p className="text-sm">Engineering College Baran</p>
-                <p className="mt-1 text-lg font-semibold">Academic | Attendance | Exams | Notices</p>
-              </div>
-            </div>
+          <div className="mt-6 text-center text-sm text-slate-600">
+            Return to{" "}
+            <Link to="/" className="font-semibold text-blue-800 hover:underline">
+              Main Website
+            </Link>
           </div>
         </div>
       </div>
-      <CmsFooter variant="login"/>
+
+      <CmsFooter variant="login" className="relative z-10 border-white/15 bg-slate-950/30 text-white"/>
     </div>);
 }
