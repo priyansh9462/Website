@@ -44,7 +44,7 @@ const Topbar = () => {
         navigate("/login");
     };
     const displayRole = user?.role === "teacher" ? "Faculty" : user?.role === "student" ? "Student" : "Admin";
-    return (<header className="cms-topbar border-b border-[#DEDACC] bg-gradient-to-r from-[#FFFDF6] via-white to-[#F7F9FF] shadow-sm">
+    return (<header className="cms-topbar border-b border-[#D6E4FF] bg-gradient-to-r from-white via-[#F8FBFF] to-[#EEF5FF] shadow-sm">
       <div className="px-6 py-4 flex items-center justify-between">
         <h1 className="text-xl font-semibold text-[#112F68]">Welcome back, {user ? displayRole : "..."}</h1>
 
@@ -55,9 +55,9 @@ const Topbar = () => {
           <Button variant="ghost" size="sm" className="text-slate-600 hover:text-[#112F68]">
             <Bell className="h-4 w-4"/>
           </Button>
-          <div className="flex items-center gap-3 pl-3 border-l border-[#DEDACC]">
+          <div className="flex items-center gap-3 pl-3 border-l border-[#D6E4FF]">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full overflow-hidden border border-[#E9F7F1] bg-[#E9F7F1] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-[#D9E8FF] bg-[#EEF5FF] flex items-center justify-center">
                 {profilePhoto ? (<img src={profilePhoto} alt="Profile" className="h-full w-full object-cover"/>) : (<UserIcon className="h-4 w-4 text-[#0A8B69]"/>)}
               </div>
               <span className="text-sm font-medium text-slate-700">{user?.email || "..."}</span>
