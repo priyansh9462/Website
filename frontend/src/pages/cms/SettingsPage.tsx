@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { useAuthStore } from "@/stores/use-auth-store";
 export default function SettingsPage() {
     const user = useAuthStore((state) => state.user);
+    const canEdit = user?.role === "admin" || user?.role === "teacher";
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [profileImage, setProfileImage] = useState(() => {
         if (typeof window === "undefined") {
@@ -33,6 +34,7 @@ export default function SettingsPage() {
         window.dispatchEvent(new CustomEvent("cms-profile-photo-updated", { detail: profileImage }));
     }, [profileImage]);
     const handlePhotoSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!canEdit) return;
         const file = event.target.files?.[0];
         if (!file) {
             return;
@@ -74,10 +76,12 @@ export default function SettingsPage() {
               <div className="h-32 w-32 rounded-full border border-slate-200 bg-slate-100 shadow-sm overflow-hidden">
                 <img src={profileImage} alt="Profile" className="h-full w-full object-cover"/>
               </div>
-              <button type="button" onClick={() => fileInputRef.current?.click()} className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm">
-                <Camera className="h-4 w-4"/>
-              </button>
-              <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoSelect} className="hidden"/>
+              {canEdit && (<>
+                <button type="button" onClick={() => fileInputRef.current?.click()} className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm">
+                  <Camera className="h-4 w-4"/>
+                </button>
+                <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoSelect} className="hidden"/>
+              </>)}
             </div>
             <div>
               <h2 className="text-lg font-semibold text-slate-900">Profile</h2>
@@ -85,7 +89,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {isCropOpen && pendingImage ? (<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+          {canEdit && isCropOpen && pendingImage ? (<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
               <div className="w-full max-w-md rounded-[2rem] bg-white p-6 shadow-2xl">
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-slate-900">Adjust your profile photo</h3>
@@ -148,19 +152,43 @@ export default function SettingsPage() {
           <div className="space-y-5">
             <div className="space-y-2">
               <Label className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Full Name</Label>
-              <Input value={fullName} onChange={(e) => setFullName(e.target.value)} className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
+              <Input value={fullName}
+                     readOnly={!canEdit}
+                     onChange={(e) => {
+                         if (!canEdit) return;
+                         setFullName(e.target.value);
+                     }}
+                     className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
             </div>
             <div className="space-y-2">
               <Label className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Email</Label>
-              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
+              <Input type="email" value={email}
+                     readOnly={!canEdit}
+                     onChange={(e) => {
+                         if (!canEdit) return;
+                         setEmail(e.target.value);
+                     }}
+                     className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
             </div>
             <div className="space-y-2">
               <Label className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Password</Label>
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
+              <Input type="password" value={password}
+                     readOnly={!canEdit}
+                     onChange={(e) => {
+                         if (!canEdit) return;
+                         setPassword(e.target.value);
+                     }}
+                     className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
             </div>
             <div className="space-y-2">
               <Label className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Address</Label>
-              <Input value={address} onChange={(e) => setAddress(e.target.value)} className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
+              <Input value={address}
+                     readOnly={!canEdit}
+                     onChange={(e) => {
+                         if (!canEdit) return;
+                         setAddress(e.target.value);
+                     }}
+                     className="rounded-none border-x-0 border-t-0 px-0 text-base focus-visible:ring-0 focus-visible:ring-offset-0"/>
             </div>
           </div>
 
@@ -169,7 +197,7 @@ export default function SettingsPage() {
               <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Notifications</p>
               <p className="text-sm text-slate-500">Receive system updates and alerts</p>
             </div>
-            <Switch checked={notificationsEnabled} onCheckedChange={setNotificationsEnabled}/>
+            <Switch checked={notificationsEnabled} onCheckedChange={setNotificationsEnabled} disabled={!canEdit}/>
           </div>
         </CardContent>
       </Card>

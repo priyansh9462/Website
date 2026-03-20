@@ -34,26 +34,25 @@ const Header = () => {
                 { name: "Academic Calendar", href: "https://rtu.ac.in/index/viewdata.php?page=Academic-Calendar1" },
                 { name: "Syllabus", href: "/academic-programs" },
                 { name: "Results", href: "https://rtu.sumsraj.com/Exam/Report/DownloadGradesheet.aspx" },
-                { name: "Time Table Management", href: "/student-portal" }
+                { name: "Time Table Management", href: "/timetable" }
             ]
         },
         {
             name: "Cells",
             submenu: [
-                { name: "AICTE Cells", href: "/about" },
-                { name: "Alumni Cells", href: "/about" },
-                { name: "Campus Development & Planning Cells", href: "/about" },
-                { name: "EAP Cells", href: "/about" },
-                { name: "Environment Cells", href: "/about" },
-                { name: "IIC Cells", href: "/about" },
-                { name: "NBA Cells", href: "/about" },
-                { name: "Sports Department Cells", href: "/about" }
+                { name: "AICTE Cells", href: "/college-cells" },
+                { name: "Alumni Cells", href: "/college-cells" },
+                { name: "Campus Development & Planning Cells", href: "/college-cells" },
+                { name: "EAP Cells", href: "/college-cells" },
+                { name: "Environment Cells", href: "/college-cells" },
+                { name: "IIC Cells", href: "/college-cells" },
+                { name: "NBA Cells", href: "/college-cells" },
+                { name: "Sports Department Cells", href: "/college-cells" }
             ]
         },
         { name: "Faculty", href: "/faculty" },
         { name: "Event", href: "/events" },
         { name: "About Us", href: "/about" },
-        { name: "Contact Us", href: "/contact" }
     ];
 
     const isExternalLink = (href: string) => href.startsWith("http");
@@ -203,9 +202,9 @@ const Header = () => {
                 {submenus[item.name] && (<div className="absolute top-full min-w-[calc(100%+112px)] -translate-x-10 pt-8 font-normal opacity-100 transition-opacity pointer-events-auto">
                     <ul className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
                       {item.submenu.map((subItem, subIndex) => (<li key={subIndex} className="group/child relative whitespace-nowrap border-b border-slate-100 last:border-b-0">
-                          <a href={subItem.href} className="flex items-center gap-2 px-10 py-6 transition-colors group-hover/child:bg-slate-50 group-hover/child:font-bold group-hover/child:text-primary">
+                          <Link to={subItem.href || "/"} className="flex items-center gap-2 px-10 py-6 transition-colors group-hover/child:bg-slate-50 group-hover/child:font-bold group-hover/child:text-primary">
                             {subItem.name}
-                          </a>
+                          </Link>
                         </li>))}
                     </ul>
                   </div>)}

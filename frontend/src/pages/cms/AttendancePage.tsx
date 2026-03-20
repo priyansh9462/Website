@@ -75,6 +75,24 @@ export default function AttendancePage() {
         const matchByEmail = email ? students.find((s) => s.email?.toLowerCase() === email) : null;
         return matchByEmail ?? students[0] ?? null;
     }, [students, user]);
+    const myAttendance = useMemo(() => {
+        if (!currentStudent)
+            return [];
+        return attendance
+            .filter((a) => a.student_id === currentStudent.id)
+            .slice()
+            .sort((a, b) => {
+                const aTime = new Date(String(a.date)).getTime() || 0;
+                const bTime = new Date(String(b.date)).getTime() || 0;
+                return bTime - aTime;
+            });
+    }, [attendance, currentStudent]);
+    const myAttendanceStats = useMemo(() => {
+        const total = myAttendance.length;
+        const presentCount = myAttendance.filter((a) => Boolean(a.present)).length;
+        const rate = total > 0 ? Math.round((presentCount / total) * 100) : 0;
+        return { total, presentCount, rate };
+    }, [myAttendance]);
     const parseQrPayload = useCallback((raw: string): QrPayload | null => {
         if (!raw)
             return null;
@@ -251,8 +269,57 @@ export default function AttendancePage() {
     return (<div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Attendance Management</h1>
-        <p className="text-gray-600">{canManage ? "Track and manage student attendance records" : "Scan the subject QR to mark your attendance"}</p>
+        <p className="text-gray-600">{canManage ? "Track and manage student attendance records" : "Scan the subject QR to mark your attendance. View your history below."}</p>
       </div>
+
+      {!canManage && (<Card className="border-l-4 border-l-teal-500">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium text-gray-600">My Attendance</CardTitle>
+          <TrendingUp className="h-4 w-4 text-teal-600"/>
+        </CardHeader>
+        <CardContent>
+          {currentStudent ? (<>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+                <div className="text-2xl font-bold text-gray-900">{myAttendanceStats.rate}%</div>
+                <div className="text-xs text-gray-500 mt-1">Overall rate</div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+                <div className="text-2xl font-bold text-gray-900">{myAttendanceStats.presentCount}</div>
+                <div className="text-xs text-gray-500 mt-1">Present</div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+                <div className="text-2xl font-bold text-gray-900">{myAttendanceStats.total}</div>
+                <div className="text-xs text-gray-500 mt-1">Total records</div>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-medium text-gray-900">Recent records</h3>
+                <p className="text-xs text-gray-500">Latest 8</p>
+              </div>
+
+              <div className="mt-3 space-y-2">
+                {myAttendance.length > 0 ? (myAttendance.slice(0, 8).map((record) => {
+                    const cls = classes.find((c) => c.id === record.class_id);
+                    const subject = subjects.find((s) => s.id === record.subject_id);
+                    return (<div key={`${record.student_id}-${record.class_id}-${record.subject_id}-${record.date}-${record.source || ""}`} className="flex items-start justify-between gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-gray-900 truncate">{subject?.name || record.subject_id}</div>
+                        <div className="text-xs text-gray-500 truncate">{cls?.name || record.class_id}</div>
+                        <div className="text-xs text-gray-500">{String(record.date)}</div>
+                      </div>
+                      <Badge variant={record.present ? "default" : "secondary"}>
+                        {record.present ? "Present" : "Absent"}
+                      </Badge>
+                    </div>);
+                })) : (<p className="text-sm text-gray-500 mt-2">No attendance records found yet. Ask your faculty/admin to mark attendance.</p>)}
+              </div>
+            </div>
+          </>) : (<p className="text-sm text-red-600">Your student profile is not linked. Ask admin to map your account.</p>)}
+        </CardContent>
+      </Card>)}
 
       {canManage && (<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="border-l-4 border-l-teal-500">

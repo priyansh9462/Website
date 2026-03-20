@@ -21,6 +21,7 @@ const PhotoGallery = lazy(() => import("./pages/PhotoGallery"));
 const ContactFaculty = lazy(() => import("./pages/ContactFaculty"));
 const AcademicPrograms = lazy(() => import("./pages/AcademicPrograms"));
 const CourseProgramDetails = lazy(() => import("./pages/CourseProgramDetails"));
+const CollegeCells = lazy(() => import("./pages/CollegeCells"));
 const LoginPage = lazy(() => import("./pages/cms/LoginPage"));
 const DashboardPage = lazy(() => import("./pages/cms/DashboardPage"));
 const NoticesPage = lazy(() => import("./pages/cms/NoticesPage"));
@@ -124,10 +125,10 @@ const App = () => (<QueryClientProvider client={queryClient}>
               <Route path="/" element={<Index />}/>
               <Route path="/login" element={<LoginPage />}/>
               <Route element={<CmsLayout />}>
-                <Route path="/dashboard" element={<RoleProtectedRoute allowedRoles={["admin", "teacher"]}>
+                <Route path="/dashboard" element={<RoleProtectedRoute allowedRoles={["admin", "teacher", "student"]}>
                       <DashboardPage />
                     </RoleProtectedRoute>}/>
-                <Route path="/notices" element={<RoleProtectedRoute allowedRoles={["admin"]}>
+                <Route path="/notices" element={<RoleProtectedRoute allowedRoles={["admin", "student"]}>
                       <NoticesPage />
                     </RoleProtectedRoute>}/>
                 <Route path="/students" element={<RoleProtectedRoute allowedRoles={["admin", "teacher"]}>
@@ -145,16 +146,16 @@ const App = () => (<QueryClientProvider client={queryClient}>
                 <Route path="/attendance" element={<RoleProtectedRoute allowedRoles={["admin", "teacher", "student"]}>
                       <AttendancePage />
                     </RoleProtectedRoute>}/>
-                <Route path="/grades" element={<RoleProtectedRoute allowedRoles={["admin", "teacher"]}>
+                <Route path="/grades" element={<RoleProtectedRoute allowedRoles={["admin", "teacher", "student"]}>
                       <GradesPage />
                     </RoleProtectedRoute>}/>
-                <Route path="/timetable" element={<RoleProtectedRoute allowedRoles={["admin", "teacher"]}>
+                <Route path="/timetable" element={<RoleProtectedRoute allowedRoles={["admin", "teacher", "student"]}>
                       <TimetablePage />
                     </RoleProtectedRoute>}/>
-                <Route path="/fees" element={<RoleProtectedRoute allowedRoles={["admin"]}>
+                <Route path="/fees" element={<RoleProtectedRoute allowedRoles={["admin", "student"]}>
                       <FeesPage />
                     </RoleProtectedRoute>}/>
-                <Route path="/settings" element={<RoleProtectedRoute allowedRoles={["admin", "teacher"]}>
+                <Route path="/settings" element={<RoleProtectedRoute allowedRoles={["admin", "teacher", "student"]}>
                       <SettingsPage />
                     </RoleProtectedRoute>}/>
               </Route>
@@ -167,6 +168,7 @@ const App = () => (<QueryClientProvider client={queryClient}>
               <Route path="/courses/bca" element={<CourseProgramDetails programKey="BCA" />}/>
               <Route path="/events" element={<Events />}/>
               <Route path="/about" element={<About />}/>
+              <Route path="/college-cells" element={<CollegeCells />}/>
               <Route path="/ExperienceCampus" element={<ExperienceCampus />}/>
               <Route path="/experience-campus" element={<ExperienceCampus />}/>
               <Route path="/admin" element={<AdminDashboard />}/>
