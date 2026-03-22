@@ -13,10 +13,11 @@ const Faculty = lazy(() => import("./pages/Faculty"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Events = lazy(() => import("./pages/Events"));
 const About = lazy(() => import("./pages/About"));
+const PublicNotices = lazy(() => import("./pages/PublicNotices"));
 const ExperienceCampus = lazy(() => import("./pages/ExperienceCampus"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const VirtualTour = lazy(() => import("./pages/VirtualTour"));
+const VirtualTour = lazy(() => import("./pages/Virtualtour"));
 const PhotoGallery = lazy(() => import("./pages/PhotoGallery"));
 const ContactFaculty = lazy(() => import("./pages/ContactFaculty"));
 const AcademicPrograms = lazy(() => import("./pages/AcademicPrograms"));
@@ -168,6 +169,7 @@ const App = () => (<QueryClientProvider client={queryClient}>
               <Route path="/courses/bca" element={<CourseProgramDetails programKey="BCA" />}/>
               <Route path="/events" element={<Events />}/>
               <Route path="/about" element={<About />}/>
+              <Route path="/notice" element={<PublicNotices />}/>
               <Route path="/college-cells" element={<CollegeCells />}/>
               <Route path="/ExperienceCampus" element={<ExperienceCampus />}/>
               <Route path="/experience-campus" element={<ExperienceCampus />}/>

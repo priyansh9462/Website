@@ -21,10 +21,13 @@ type QrPayload = {
     date: string;
 };
 const SCANNER_ID = "qr-reader-container";
+type StudentAttendanceView = "my" | "mark";
 export default function AttendancePage() {
     const user = useAuthStore((state) => state.user);
     const canManage = user?.role !== "student";
     const defaultTab = canManage ? "manual" : "qr";
+    /** Students always land on My Attendance first; switch via buttons */
+    const [studentView, setStudentView] = useState<StudentAttendanceView>("my");
     const [classes, setClasses] = useState<any[]>([]);
     const [students, setStudents] = useState<any[]>([]);
     const [subjects, setSubjects] = useState<any[]>([]);
@@ -187,6 +190,11 @@ export default function AttendancePage() {
             }
         };
     }, [isScanning]);
+    useEffect(() => {
+        if (!canManage && studentView === "my") {
+            setIsScanning(false);
+        }
+    }, [studentView, canManage]);
     const handleSaveAttendance = useCallback(() => {
         if (!selectedClassId) {
             toast({ title: "Error", description: "Please select a class", variant: "destructive" });
@@ -269,10 +277,27 @@ export default function AttendancePage() {
     return (<div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Attendance Management</h1>
-        <p className="text-gray-600">{canManage ? "Track and manage student attendance records" : "Scan the subject QR to mark your attendance. View your history below."}</p>
+        <p className="text-gray-600">{canManage
+            ? "Track and manage student attendance records"
+            : studentView === "my"
+                ? "View your attendance summary and recent records."
+                : "Scan the subject QR to mark your attendance, or paste the QR code text below."}</p>
       </div>
 
-      {!canManage && (<Card className="border-l-4 border-l-teal-500">
+      {!canManage && (<div className="flex flex-wrap gap-3">
+        <Button type="button" variant={studentView === "my" ? "default" : "outline"} className={studentView === "my"
+            ? "bg-gradient-to-r from-[#123B7A] to-[#1C58B0] hover:from-[#102f62] hover:to-[#184b97] text-white shadow-sm"
+            : "border-[#CCD4E3] text-[#112F68] hover:bg-[#F3F6FF]"} onClick={() => setStudentView("my")}>
+          My Attendance
+        </Button>
+        <Button type="button" variant={studentView === "mark" ? "default" : "outline"} className={studentView === "mark"
+            ? "bg-gradient-to-r from-[#123B7A] to-[#1C58B0] hover:from-[#102f62] hover:to-[#184b97] text-white shadow-sm"
+            : "border-[#CCD4E3] text-[#112F68] hover:bg-[#F3F6FF]"} onClick={() => setStudentView("mark")}>
+          Mark Attendance
+        </Button>
+      </div>)}
+
+      {!canManage && studentView === "my" && (<Card className="border-l-4 border-l-teal-500">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium text-gray-600">My Attendance</CardTitle>
           <TrendingUp className="h-4 w-4 text-teal-600"/>
@@ -356,7 +381,7 @@ export default function AttendancePage() {
         </Card>
       </div>)}
 
-      <Card>
+      {(canManage || (!canManage && studentView === "mark")) && (<Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5 text-teal-600"/>
@@ -529,6 +554,6 @@ export default function AttendancePage() {
             </TabsContent>
           </Tabs>
         </CardContent>
-      </Card>
+      </Card>)}
     </div>);
 }

@@ -238,7 +238,7 @@ function NoticeSection({ notices, fallback }: {
     const downloadAttachment = (notice: Notice) => {
         downloadNoticeAttachment(notice);
     };
-    return (<Card className="border-l-4 border-l-yellow-500">
+    return (<Card id="notice-section" className="border-l-4 border-l-yellow-500">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <Bell className="h-5 w-5 text-yellow-600"/>
