@@ -2,7 +2,7 @@ name: react_frontend
 
 on:
   push:
-    branches: [ "feature/webapp" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     
     defaults:
-      run:
-        working-directory: ./scholr-Web/frontend
 
     steps:
     - name: Checkout code
